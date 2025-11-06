@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Dashboard - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #ec4899;
+            --bg-color: #ffffff;
+            --text-color: #1f2937;
+            --card-bg: #f9fafb;
+            --border-color: #e5e7eb;
+        }
+
+        body.dark-mode {
+            --bg-color: #0f172a;
+            --text-color: #f1f5f9;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--card-bg);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* Timer Display */
+        .timer-container {
+            background: var(--card-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .profile-image {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+            animation: fadeInRight 0.8s ease;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: white;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* About Section */
+        .about-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .about-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .about-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .about-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 2rem 1rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .profile-image {
+                margin: 0 auto;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .timer-container {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+        }
+
+        /* Skills Page Styles */
+        .skills-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .skills-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .skills-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .skill-item {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateX(10px);
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .skill-percentage {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0;
+            transition: width 1.5s ease;
+            border-radius: 10px;
+        }
+
+        /* Projects Page Styles */
+        .projects-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .projects-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .projects-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .project-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .project-card p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tech-tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .project-link {
+            padding: 0.6rem 1.2rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* Contact Form Styles */
+        .contact-section {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .form-group.error input,
+        .form-group.error textarea {
+            border-color: #ef4444;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .success-message {
+            background: #10b981;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">YourName</div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><button class="theme-toggle" id="themeToggle">🌙 Dark Mode</button></li>
+                <li><div class="timer-container" id="timer">Time: 00:00</div></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <section id="home" class="page-section">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Hi, I'm Your Name</h1>
+                <p>Full Stack Developer | UI/UX Enthusiast | Problem Solver</p>
+                <p>I create beautiful, functional, and user-friendly web applications that solve real-world problems.</p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+            <div class="profile-image">👤</div>
+        </div>
+
+        <div class="about-section">
+            <div class="about-cards">
+                <div class="about-card">
+                    <h3>💻 Developer</h3>
+                    <p>Passionate about creating elegant solutions to complex problems using modern technologies.</p>
+                </div>
+                <div class="about-card">
+                    <h3>🎨 Designer</h3>
+                    <p>Focused on creating intuitive and visually appealing user interfaces that enhance user experience.</p>
+                </div>
+                <div class="about-card">
+                    <h3>🚀 Innovator</h3>
+                    <p>Always exploring new technologies and methodologies to stay ahead in the ever-evolving tech landscape.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-section" id="contact">
+            <h2>Get In Touch</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" name="name" required>
+                    <span class="error-message">Please enter your name</span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="error-message">Please enter a valid email</span>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required></textarea>
+                    <span class="error-message">Please enter a message</span>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+                <div class="success-message" id="successMessage">Thank you! Your message has been sent successfully.</div>
+            </form>
+        </div>
+    </section>
+
+    <!-- SKILLS PAGE -->
+    <section id="skills" class="page-section" style="display: none;">
+        <div class="skills-container">
+            <div class="skills-header">
+                <h1>My Skills</h1>
+                <p>Here are the technologies and tools I work with</p>
+            </div>
+            <div class="skills-list" id="skillsList"></div>
+        </div>
+    </section>
+
+    <!-- PROJECTS PAGE -->
+    <section id="projects" class="page-section" style="display: none;">
+        <div class="projects-container">
+            <div class="projects-header">
+                <h1>My Projects</h1>
+                <p>Explore my recent work and achievements</p>
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="web">Web Development</button>
+                <button class="filter-btn" data-filter="mobile">Mobile</button>
+                <button class="filter-btn" data-filter="ai">AI/ML</button>
+            </div>
+            <div class="projects-grid" id="projectsGrid"></div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Your Name. All rights reserved. | Built with ❤️ using HTML, CSS & JavaScript</p>
+    </footer>
+
+    <script>
+        // Timer functionality
+        let startTime = Date.now();
+        let timerInterval;
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('timer').textContent = 
+                `Time: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        timerInterval = setInterval(updateTimer, 1000);
+
+        // Theme Switcher
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.textContent = '☀️ Light Mode';
+            } else {
+                themeToggle.textContent = '🌙 Dark Mode';
+            }
+        });
+        const skills = [
+            { name: 'JavaScript', level: 90, category: 'Programming' },
+            { name: 'React.js', level: 85, category: 'Frontend' },
+            { name: 'Node.js', level: 80, category: 'Backend' },
+            { name: 'Python', level: 75, category: 'Programming' },
+            { name: 'HTML/CSS', level: 95, category: 'Frontend' },
+            { name: 'MongoDB', level: 70, category: 'Database' },
+            { name: 'Git/GitHub', level: 85, category: 'Tools' },
+            { name: 'UI/UX Design', level: 78, category: 'Design' }
+        ];
+
+        // Projects Data
+        const projects = [
+            {
+                title: 'Final Year Project - AI Healthcare Assistant',
+                description: 'An intelligent healthcare management system using machine learning to predict patient outcomes and optimize treatment plans.',
+                technologies: ['Python', 'TensorFlow', 'React', 'Node.js', 'MongoDB'],
+                problem: 'Healthcare professionals struggle with analyzing large amounts of patient data to make timely decisions.',
+                proposition: 'AI-powered system that analyzes patient data in real-time and provides actionable insights.',
+                competitors: 'IBM Watson Health, Google Health AI',
+                link: 'https://github.com/yourusername/healthcare-ai',
+                demo: 'https://healthcare-ai-demo.netlify.app',
+                category: 'ai'
+            },
+            {
+                title: 'E-Commerce Platform',
+                description: 'A full-stack e-commerce solution with payment integration, inventory management, and real-time order tracking.',
+                technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Stripe'],
+                problem: 'Small businesses need affordable, customizable e-commerce solutions.',
+                proposition: 'Open-source platform that\'s easy to customize and deploy without monthly fees.',
+                competitors: 'Shopify, WooCommerce, BigCommerce',
+                link: 'https://github.com/yourusername/ecommerce-platform',
+                demo: 'https://ecommerce-demo.netlify.app',
+                category: 'web'
+            }
+        ];
+
+        // Render Skills
+        function renderSkills() {
+            const skillsList = document.getElementById('skillsList');
+            skillsList.innerHTML = skills.map(skill => `
+                <div class="skill-item">
+                    <div class="skill-info">
+                        <span class="skill-name">${skill.name}</span>
+                        <span class="skill-percentage">${skill.level}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" data-level="${skill.level}"></div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Animate progress bars
+            setTimeout(() => {
+                document.querySelectorAll('.progress-fill').forEach(fill => {
+                    fill.style.width = fill.dataset.level + '%';
+                });
+            }, 100);
+        }
+
+        // Render Projects
+        function renderProjects(filter = 'all') {
+            const projectsGrid = document.getElementById('projectsGrid');
+            const filtered = filter === 'all' 
+                ? projects 
+                : projects.filter(p => p.category === filter);
+
+            projectsGrid.innerHTML = filtered.map(project => `
+                <div class="project-card">
+                    <h3>${project.title}</h3>
+                    <p><strong>Description:</strong> ${project.description}</p>
+                    <p><strong>Problem:</strong> ${project.problem}</p>
+                    <p><strong>Solution:</strong> ${project.proposition}</p>
+                    <p><strong>Competitors:</strong> ${project.competitors}</p>
+                    <div class="tech-tags">
+                        ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                    </div>
+                    <div class="project-links">
+                        <a href="${project.link}" class="project-link" target="_blank">GitHub</a>
+                        <a href="${project.demo}" class="project-link" target="_blank">Live Demo</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter Projects
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                renderProjects(e.target.dataset.filter);
+            });
+        });
+
+        // Form Validation
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+
+            // Name validation
+            const name = document.getElementById('name');
+            const nameGroup = name.closest('.form-group');
+            if (name.value.trim().length < 2) {
+                nameGroup.classList.add('error');
+                isValid = false;
+            } else {
+                nameGroup.classList.remove('error');
+            }
+
+            // Email validation
+            const email = document.getElementById('email');
+            const emailGroup = email.closest('.form-group');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                emailGroup.classList.add('error');
+                isValid = false;
+            } else {
+                emailGroup.classList.remove('error');
+            }
+
+            // Message validation
+            const message = document.getElementById('message');
+            const messageGroup = message.closest('.form-group');
+            if (message.value.trim().length < 10) {
+                messageGroup.classList.add('error');
+                isValid = false;
+            } else {
+                messageGroup.classList.remove('error');
+            }
+
+            if (isValid) {
+                document.getElementById('successMessage').style.display = 'block';
+                contactForm.reset();
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            }
+        });
+
+        // Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = e.target.getAttribute('href').substring(1);
+                
+                document.querySelectorAll('.page-section').forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                    
+                    if (targetId === 'skills') {
+                        renderSkills();
+                    } else if (targetId === 'projects') {
+                        renderProjects();
+                    }
+                }
+            });
+        });
+
+        // Initialize
+        renderSkills();
+        renderProjects();
+
+        // Cleanup on page leave
+        window.addEventListener('beforeunload', () => {
+            clearInterval(timerInterval);
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            console.log(`Total time spent: ${elapsed} seconds`);
+        });
+    </script>
+</body>
+</html>
